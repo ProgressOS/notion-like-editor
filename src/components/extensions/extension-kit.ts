@@ -1,5 +1,6 @@
 "use client";
 
+import { Extension } from "@tiptap/core";
 import {
   BlockquoteFigure,
   CharacterCount,
@@ -41,8 +42,10 @@ const lowlight = createLowlight(common);
 
 export const ExtensionKit = ({
   onUpload,
+  extensions = [],
 }: {
   onUpload?: (file: File) => string | Promise<string>;
+  extensions?: Extension[];
 }) => [
   Document,
   Columns,
@@ -107,6 +110,7 @@ export const ExtensionKit = ({
     width: 2,
     class: "ProseMirror-dropcursor border-black",
   }),
+  ...extensions,
 ];
 
 export default ExtensionKit;

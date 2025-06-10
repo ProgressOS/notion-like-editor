@@ -1,0 +1,20 @@
+import { Editor } from '@tiptap/react';
+import { ShouldShowProps } from '../../types';
+export declare const useTextmenuStates: (editor: Editor) => {
+    isBold: boolean;
+    isItalic: boolean;
+    isStrike: boolean;
+    isUnderline: boolean;
+    isCode: boolean;
+    isSubscript: boolean;
+    isSuperscript: boolean;
+    isAlignLeft: boolean;
+    isAlignCenter: boolean;
+    isAlignRight: boolean;
+    isAlignJustify: boolean;
+    currentColor: any;
+    currentHighlight: any;
+    currentFont: any;
+    currentSize: any;
+    shouldShow: ({ view, from }: ShouldShowProps) => boolean;
+};

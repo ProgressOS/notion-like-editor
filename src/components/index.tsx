@@ -6,16 +6,16 @@ import React, { useRef } from "react";
 import { EditorContent, JSONContent } from "@tiptap/react";
 
 // hooks
-import { useDarkmode } from "@/hooks/useDarkmode";
-import { useBlockEditor } from "@/hooks/useBlockEditor";
+import { useDarkmode } from "./hooks/useDarkmode";
+import { useBlockEditor } from "./hooks/useBlockEditor";
 
 // types
-import { Editor as EditorType } from "@tiptap/core";
+import { Editor as EditorType, Extension } from "@tiptap/core";
 
 // components
-import { LinkMenu, TextMenu } from "@/components/menus";
-import { ColumnsMenu } from "@/extensions/MultiColumn/menus";
-import { TableColumnMenu, TableRowMenu } from "@/extensions/Table/menus";
+import { LinkMenu, TextMenu } from "./components/menus";
+import { ColumnsMenu } from "./extensions/MultiColumn/menus";
+import { TableColumnMenu, TableRowMenu } from "./extensions/Table/menus";
 
 // views
 import "./editor.css";
@@ -55,6 +55,10 @@ interface EditorProps {
    * A callback function that is called whenever the image upload
    */
   onUploadImage?: (file: File) => string | Promise<string>;
+  /**
+   * An array of extensions to use for the editor.
+   */
+  extensions?: Extension[];
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -63,6 +67,7 @@ const Editor: React.FC<EditorProps> = ({
   mode = "light",
   content,
   onUploadImage,
+  extensions = [],
 }) => {
   const { darkMode, lightMode } = useDarkmode();
   const menuContainerRef = useRef(null);
@@ -72,6 +77,7 @@ const Editor: React.FC<EditorProps> = ({
     handleUpdate: onUpdate,
     onUploadImage,
     content,
+    extensions
   });
 
   React.useEffect(() => {
@@ -96,7 +102,7 @@ const Editor: React.FC<EditorProps> = ({
   }
 
   return (
-    <div className="flex h-full" ref={menuContainerRef}>
+    <div className="flex w-full bg-white text-black p-8 h-full" ref={menuContainerRef}>
       <div className="relative flex flex-col flex-1 h-full">
         <EditorContent
           editor={editor}

@@ -6,6 +6,8 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx,mdx,stories}",
+    "./.storybook/**/*.{js,jsx,ts,tsx,mdx,stories}", // aggiungi questa se usi Storybook!
   ],
   prefix: "",
   theme: {
@@ -131,7 +133,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;
 
 export default config;

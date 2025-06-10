@@ -1,0 +1,22 @@
+import { Editor } from '@tiptap/react';
+export declare const useTextmenuCommands: (editor: Editor) => {
+    onBold: () => boolean;
+    onItalic: () => boolean;
+    onStrike: () => boolean;
+    onUnderline: () => boolean;
+    onCode: () => boolean;
+    onCodeBlock: () => boolean;
+    onSubscript: () => boolean;
+    onSuperscript: () => boolean;
+    onAlignLeft: () => boolean;
+    onAlignCenter: () => boolean;
+    onAlignRight: () => boolean;
+    onAlignJustify: () => boolean;
+    onChangeColor: (color: string) => boolean;
+    onClearColor: () => boolean;
+    onChangeHighlight: (color: string) => boolean;
+    onClearHighlight: () => boolean;
+    onSetFont: (font: string) => boolean;
+    onSetFontSize: (fontSize: string) => boolean;
+    onLink: (url: string, inNewTab?: boolean) => boolean;
+};

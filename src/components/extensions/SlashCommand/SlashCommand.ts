@@ -12,6 +12,8 @@ import { MenuList } from "./MenuList";
 
 const extensionName = "slashCommand";
 
+const prefixChar = "/";
+
 let popup: any;
 
 export const SlashCommand = Extension.create({
@@ -43,7 +45,7 @@ export const SlashCommand = Extension.create({
     return [
       Suggestion({
         editor: this.editor,
-        char: "/",
+        char: prefixChar,
         allowSpaces: true,
         startOfLine: true,
         pluginKey: new PluginKey(extensionName),
@@ -51,12 +53,12 @@ export const SlashCommand = Extension.create({
           const $from = state.doc.resolve(range.from);
           const isRootDepth = $from.depth === 1;
           const isParagraph = $from.parent.type.name === "paragraph";
-          const isStartOfNode = $from.parent.textContent?.charAt(0) === "/";
+          const isStartOfNode = $from.parent.textContent?.charAt(0) === prefixChar;
           // TODO
           const isInColumn = this.editor.isActive("column");
 
           const afterContent = $from.parent.textContent?.substring(
-            $from.parent.textContent?.indexOf("/")
+            $from.parent.textContent?.indexOf(prefixChar)
           );
           const isValidAfterContent = !afterContent?.endsWith("  ");
 
@@ -74,7 +76,7 @@ export const SlashCommand = Extension.create({
           const from = $head?.nodeBefore
             ? end -
               ($head.nodeBefore.text?.substring(
-                $head.nodeBefore.text?.indexOf("/")
+                $head.nodeBefore.text?.indexOf(prefixChar)
               ).length ?? 0)
             : $from.start();
 

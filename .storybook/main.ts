@@ -1,42 +1,24 @@
-import type { StorybookConfig } from "@storybook/react-webpack5";
+import type { StorybookConfig } from "@storybook/react-vite";
 import path from "path";
+import { mergeConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-onboarding",
-    "@storybook/addon-interactions",
-    {
-      name: "@storybook/addon-styling",
-      options: {
-        postCss: true,
-      },
-    },
-  ],
+  addons: [],
   framework: {
-    name: "@storybook/react-webpack5",
-    options: {
-      builder: {
-        useSWC: true,
-      },
-    },
+    name: "@storybook/react-vite",
+    options: {},
   },
-  webpackFinal: async (config) => {
-    config.module?.rules?.push({
-      test: /\.(ts|tsx)$/,
-      use: [
-        {
-          loader: require.resolve("ts-loader"),
+  viteFinal: (config) =>
+    mergeConfig(config, {
+      resolve: {
+        alias: {
+          "@progressos/notion-like-editor": path.resolve(__dirname, "../src"),
+          "@/": path.resolve(__dirname, "../src/components/"),
         },
-      ],
-    });
-    config.resolve?.extensions?.push(".ts", ".tsx");
-    return config;
-  },
-  docs: {
-    autodocs: "tag",
-  },
+      },
+      plugins: [tsconfigPaths()],
+    }),
 };
 export default config;
