@@ -13,7 +13,6 @@ import {
   Heading,
   Highlight,
   HorizontalRule,
-  ImageBlock,
   Link,
   Placeholder,
   Selection,
@@ -36,7 +35,6 @@ import {
   TaskList,
 } from ".";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
-import { ImageUpload } from "./ImageUpload";
 import { common, createLowlight } from "lowlight";
 
 const lowlight = createLowlight(common);
@@ -82,10 +80,6 @@ export const ExtensionKit = ({
   Highlight.configure({ multicolor: true }),
   Underline,
   CharacterCount.configure({ limit: 50000 }),
-  ImageUpload.configure({
-    onUpload,
-  }),
-  ImageBlock,
   TextAlign.extend({
     addKeyboardShortcuts() {
       return {};

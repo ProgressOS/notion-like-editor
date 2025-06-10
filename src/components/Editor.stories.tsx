@@ -7,7 +7,6 @@ const meta: Meta<EditorProps> = {
   component: Editor,
   argTypes: {
     onUpdate: { control: false },
-    defaultValue: { control: false },
     onUploadImage: { control: false },
   },
 } satisfies Meta<EditorProps>;

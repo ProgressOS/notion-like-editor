@@ -2,4 +2,4 @@
 
 ## Reporting a Vulnerability
 
-To report a vulnerability please write a message to `neznaykagm@gmail.com` or [LinkedIn](https://www.linkedin.com/in/alexey-buhayov/)
+To report a vulnerability please write a message to `info@stabilidea.it`

@@ -77,7 +77,7 @@ export const GROUPS: Group[] = [
       {
         name: "codeBlock",
         label: "Code Block",
-        iconName: "CodeSquare",
+        iconName: "SquareCode",
         description: "Code block with syntax highlighting",
         shouldBeHidden: (editor) => editor.isActive("columns"),
         action: (editor) => {
@@ -102,16 +102,6 @@ export const GROUPS: Group[] = [
             .focus()
             .insertTable({ rows: 3, cols: 3, withHeaderRow: false })
             .run();
-        },
-      },
-      {
-        name: "image",
-        label: "Image",
-        iconName: "Image",
-        description: "Insert an image",
-        aliases: ["img"],
-        action: (editor) => {
-          editor.chain().focus().setImageUpload().run();
         },
       },
       {

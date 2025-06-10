@@ -24,13 +24,15 @@ const config: StorybookConfig = {
     },
   },
   webpackFinal: async (config) => {
-    if (config.resolve?.alias) {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        "@": path.resolve(__dirname, "../src/components/"),
-      };
-    }
-
+    config.module?.rules?.push({
+      test: /\.(ts|tsx)$/,
+      use: [
+        {
+          loader: require.resolve("ts-loader"),
+        },
+      ],
+    });
+    config.resolve?.extensions?.push(".ts", ".tsx");
     return config;
   },
   docs: {

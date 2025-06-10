@@ -16,7 +16,6 @@ import { Editor as EditorType } from "@tiptap/core";
 import { LinkMenu, TextMenu } from "@/components/menus";
 import { ColumnsMenu } from "@/extensions/MultiColumn/menus";
 import { TableColumnMenu, TableRowMenu } from "@/extensions/Table/menus";
-import ImageBlockMenu from "@/extensions/ImageBlock/components/ImageBlockMenu";
 
 // views
 import "./editor.css";
@@ -109,7 +108,6 @@ const Editor: React.FC<EditorProps> = ({
         <ColumnsMenu editor={editor} appendTo={menuContainerRef} />
         <TableRowMenu editor={editor} appendTo={menuContainerRef} />
         <TableColumnMenu editor={editor} appendTo={menuContainerRef} />
-        <ImageBlockMenu editor={editor} appendTo={menuContainerRef} />
       </div>
 
       <Toaster />

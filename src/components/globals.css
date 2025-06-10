@@ -1,4 +1,6 @@
-@import 'editor.css';
+@import './editor.css';
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 @tailwind base;
 @tailwind components;
