@@ -25,6 +25,7 @@ export const useBlockEditor = ({
       content,
       autofocus: true,
       onUpdate({ editor }) {
+        console.log("Editor updated:", editor);
         handleUpdate?.(editor);
       },
       extensions: [...ExtensionKit({ onUpload: onUploadImage, extensions })],

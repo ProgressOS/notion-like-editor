@@ -2,28 +2,18 @@
   <img src="./assets/demo.gif" alt="Wysiwyg demo" />
 </p>
 
-<div align="center">
-
-[![npm downloads](https://img.shields.io/npm/dm/react-notion-wysiwyg.svg?style=for-the-badge)](https://www.npmjs.com/package/react-notion-wysiwyg)
-[![npm](https://img.shields.io/npm/dt/react-notion-wysiwyg.svg?style=for-the-badge)](https://www.npmjs.com/package/react-notion-wysiwyg)
-[![npm](https://img.shields.io/npm/l/react-notion-wysiwyg?style=for-the-badge)](https://github.com/splitbee/react-notion/blob/main/LICENSE)
-
-</div>
-
-[**DEMO**](https://buhayova.github.io/react-notion-wysiwyg/)
-
 ### Install
 
-    yarn add react-notion-wysiwyg
+    yarn add @progressos/notion-like-editor
 or
 
-    npm install --save react-notion-wysiwyg
+    npm install --save @progressos/notion-like-editor
 
 
 ### Use and Setup
 
 ```jsx
-import { Editor } from 'react-notion-wysiwyg';
+import { Editor } from '@progressos/notion-like-editor';
 ```
 
 #### Params:
@@ -44,4 +34,4 @@ import { Editor } from 'react-notion-wysiwyg';
 
 ## License
 
-Licensed under the [MIT license](https://github.com/BuhayovA/react-notion-wysiwyg/blob/main/LICENSE)
+Licensed under the [MIT license](https://github.com/BuhayovA/@progressos/notion-like-editor/blob/main/LICENSE)

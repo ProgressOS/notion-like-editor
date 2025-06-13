@@ -77,7 +77,7 @@ const Editor: React.FC<EditorProps> = ({
     handleUpdate: onUpdate,
     onUploadImage,
     content,
-    extensions
+    extensions,
   });
 
   React.useEffect(() => {
@@ -102,7 +102,10 @@ const Editor: React.FC<EditorProps> = ({
   }
 
   return (
-    <div className="flex w-full bg-white text-black p-8 h-full" ref={menuContainerRef}>
+    <div
+      className="flex w-full bg-white text-black p-8 h-full"
+      ref={menuContainerRef}
+    >
       <div className="relative flex flex-col flex-1 h-full">
         <EditorContent
           editor={editor}
@@ -121,4 +124,4 @@ const Editor: React.FC<EditorProps> = ({
   );
 };
 
-export { Editor, EditorProps };
+export { Editor, EditorProps, EditorType };
