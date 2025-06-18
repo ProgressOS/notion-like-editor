@@ -1,6 +1,10 @@
 import { Editor } from '@tiptap/react'
 
 import { Figcaption, HorizontalRule, Link, CodeBlock } from '@/extensions'
+import TagAutocomplete from '@/extensions/CustomNodes/TagAutocomplete'
+import { KpiChain } from '@/extensions/CustomNodes/KpiChain'
+import { Metric } from '@/extensions/CustomNodes/Metric'
+import { Playbook } from '@/extensions/CustomNodes/Playbook'
 
 export const isTableGripSelected = (node: HTMLElement) => {
   let container = node
@@ -25,6 +29,10 @@ export const isCustomNodeSelected = (editor: Editor, node: HTMLElement) => {
     CodeBlock.name,
     Link.name,
     Figcaption.name,
+    TagAutocomplete.name,
+    KpiChain.name,
+    Metric.name,
+    Playbook.name,
   ]
 
   return customNodes.some(type => editor.isActive(type)) || isTableGripSelected(node)

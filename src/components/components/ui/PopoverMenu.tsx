@@ -1,9 +1,9 @@
-import * as Popover from '@radix-ui/react-popover';
-import { cn } from '@/lib/utils';
-import { icons } from 'lucide-react';
-import React, { forwardRef } from 'react';
-import { Surface } from './Surface';
-import { Toolbar } from './Toolbar';
+import * as Popover from "@radix-ui/react-popover";
+import { cn } from "@/lib/utils";
+import { icons } from "lucide-react";
+import React, { forwardRef } from "react";
+import { Surface } from "./Surface";
+import { Toolbar } from "./Toolbar";
 
 export const Trigger = Popover.Trigger;
 export const Portal = Popover.Portal;
@@ -38,7 +38,7 @@ export const Menu = ({
         <Trigger asChild>
           <Toolbar.Button
             className={triggerClassName}
-            tooltip={!isOpen ? tooltip : ''}
+            tooltip={!isOpen ? tooltip : ""}
           >
             {trigger}
           </Toolbar.Button>
@@ -63,7 +63,7 @@ export const Menu = ({
   );
 };
 
-Menu.displayName = 'Menu';
+Menu.displayName = "Menu";
 
 export const Item = ({
   label,
@@ -83,19 +83,19 @@ export const Item = ({
   isActive?: boolean;
 }) => {
   const className = cn(
-    'flex items-center gap-2 p-1.5 text-sm font-medium text-neutral-500 text-left bg-transparent w-full rounded',
+    "flex items-center gap-2 p-1.5 text-sm font-medium text-neutral-500 text-left bg-transparent w-full rounded",
     !isActive && !disabled,
-    'hover:bg-neutral-100 hover:text-neutral-800 dark:hover:bg-neutral-900 dark:hover:text-neutral-200',
+    "hover:bg-neutral-100 hover:text-neutral-800 dark:hover:bg-neutral-900 dark:hover:text-neutral-200",
     isActive &&
       !disabled &&
-      'bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200',
-    disabled && 'text-neutral-400 cursor-not-allowed dark:text-neutral-600'
+      "bg-neutral-100 text-neutral-800 dark:bg-black/90 dark:text-black/20",
+    disabled && "text-neutral-400 cursor-not-allowed dark:text-black/60"
   );
 
   const IconComponent = icon ? icons[icon] : null;
   const IconCustomComponent = iconComponent || null;
 
-  const ItemComponent = close ? Popover.Close : 'button';
+  const ItemComponent = close ? Popover.Close : "button";
 
   return (
     <ItemComponent
@@ -117,7 +117,7 @@ export type CategoryTitle = {
 
 export const CategoryTitle = ({ children }: CategoryTitle) => {
   return (
-    <div className="mt-4 first:mt-1.5 mb-1.5 text-[0.625rem] font-medium text-neutral-400 dark:text-neutral-600 uppercase select-none px-1">
+    <div className="mt-4 first:mt-1.5 mb-1.5 text-[0.625rem] font-medium text-neutral-400 dark:text-black/60 uppercase select-none px-1">
       {children}
     </div>
   );
@@ -133,4 +133,4 @@ export const Divider = forwardRef<HTMLHRElement>((props, ref) => {
   );
 });
 
-Divider.displayName = 'Divider';
+Divider.displayName = "Divider";

@@ -1,17 +1,17 @@
 .ProseMirror {
   code {
-    @apply caret-white text-white bg-neutral-900 rounded-sm shadow-lg font-mona;
+    @apply text-white bg-neutral-900 rounded-sm shadow-lg font-mona;
 
     &::selection {
-      @apply bg-white/30;
+      @apply bg-yellow-600/30;
     }
   }
 
   pre {
-    @apply caret-white bg-neutral-700 text-white rounded my-12 p-4 border border-black dark:bg-neutral-900 dark:border-neutral-800;
+    @apply bg-neutral-700 text-white rounded my-12 p-4 border border-black dark:bg-black/90 dark:border-neutral-800;
 
     *::selection {
-      @apply bg-white/20;
+      @apply bg-yellow-600/20;
     }
 
     code {

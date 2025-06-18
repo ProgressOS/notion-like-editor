@@ -1,25 +1,26 @@
+import { Editor } from "@tiptap/core";
 import { Group } from "./types";
 
 export const GROUPS: Group[] = [
   {
     name: "format",
-    title: "Format",
+    title: "Formattazione",
     commands: [
       {
         name: "heading1",
-        label: "Heading 1",
+        label: "Intestazione",
         iconName: "Heading1",
-        description: "High priority section title",
+        description: "Intestazione con alta priorità",
         aliases: ["h1"],
-        action: (editor) => {
+        action: (editor: Editor) => {
           editor.chain().focus().setHeading({ level: 1 }).run();
         },
       },
       {
         name: "heading2",
-        label: "Heading 2",
+        label: "Intestazione media",
         iconName: "Heading2",
-        description: "Medium priority section title",
+        description: "Intestazione con priorità media",
         aliases: ["h2"],
         action: (editor) => {
           editor.chain().focus().setHeading({ level: 2 }).run();
@@ -27,9 +28,9 @@ export const GROUPS: Group[] = [
       },
       {
         name: "heading3",
-        label: "Heading 3",
+        label: "Intestazione bassa",
         iconName: "Heading3",
-        description: "Low priority section title",
+        description: "Intestazione con bassa priorità",
         aliases: ["h3"],
         action: (editor) => {
           editor.chain().focus().setHeading({ level: 3 }).run();
@@ -37,9 +38,9 @@ export const GROUPS: Group[] = [
       },
       {
         name: "bulletList",
-        label: "Bullet List",
+        label: "Lista puntata",
         iconName: "List",
-        description: "Unordered list of items",
+        description: "Elenco di elementi puntati",
         aliases: ["ul"],
         action: (editor) => {
           editor.chain().focus().toggleBulletList().run();
@@ -47,9 +48,9 @@ export const GROUPS: Group[] = [
       },
       {
         name: "numberedList",
-        label: "Numbered List",
+        label: "Lista numerata",
         iconName: "ListOrdered",
-        description: "Ordered list of items",
+        description: "Elenco di elementi numerati",
         aliases: ["ol"],
         action: (editor) => {
           editor.chain().focus().toggleOrderedList().run();
@@ -57,9 +58,9 @@ export const GROUPS: Group[] = [
       },
       {
         name: "taskList",
-        label: "Task List",
+        label: "Check list",
         iconName: "ListTodo",
-        description: "Task list with todo items",
+        description: "Elenco di attività da completare",
         aliases: ["todo"],
         action: (editor) => {
           editor.chain().focus().toggleTaskList().run();
@@ -67,18 +68,18 @@ export const GROUPS: Group[] = [
       },
       {
         name: "blockquote",
-        label: "Blockquote",
+        label: "Citazione",
         iconName: "Quote",
-        description: "Element for quoting",
+        description: "Citazione o blocco di testo citato",
         action: (editor) => {
           editor.chain().focus().setBlockquote().run();
         },
       },
       {
         name: "codeBlock",
-        label: "Code Block",
+        label: "Snippet di codice",
         iconName: "SquareCode",
-        description: "Code block with syntax highlighting",
+        description: "Inserisce un blocco di codice",
         shouldBeHidden: (editor) => editor.isActive("columns"),
         action: (editor) => {
           editor.chain().focus().setCodeBlock().run();
@@ -88,43 +89,13 @@ export const GROUPS: Group[] = [
   },
   {
     name: "insert",
-    title: "Insert",
+    title: "Organizzazione",
     commands: [
       {
-        name: "table",
-        label: "Table",
-        iconName: "Table",
-        description: "Insert a table",
-        shouldBeHidden: (editor) => editor.isActive("columns"),
-        action: (editor) => {
-          editor
-            .chain()
-            .focus()
-            .insertTable({ rows: 3, cols: 3, withHeaderRow: false })
-            .run();
-        },
-      },
-      {
-        name: "columns",
-        label: "Columns",
-        iconName: "Columns2",
-        description: "Add two column content",
-        aliases: ["cols"],
-        shouldBeHidden: (editor) => editor.isActive("columns"),
-        action: (editor) => {
-          editor
-            .chain()
-            .focus()
-            .setColumns()
-            .focus(editor.state.selection.head - 1)
-            .run();
-        },
-      },
-      {
         name: "horizontalRule",
-        label: "Horizontal Rule",
+        label: "Linea orizzontale",
         iconName: "Minus",
-        description: "Insert a horizontal divider",
+        description: "Inserisce una linea orizzontale",
         aliases: ["hr"],
         action: (editor) => {
           editor.chain().focus().setHorizontalRule().run();

@@ -1,6 +1,6 @@
 .ProseMirror {
   /* pr-8 pl-20 py-16 z-0 lg:pl-8 lg:pr-8 */
-  @apply caret-black dark:caret-white outline-0 p-3;
+  @apply caret-black outline-0 p-3;
 
   & > * {
     /*@apply mx-auto max-w-2xl;*/
@@ -9,10 +9,11 @@
   .selection {
     @apply inline;
   }
-
+  
+  /* Applica lo stile di selezione a tutto... */
   .selection,
-  *::selection {
-    @apply bg-black/10 dark:bg-white/20;
+  *:not(.badge-wrapper):not(input)::selection {
+    @apply bg-yellow-300/60;
   }
 
   & > .react-renderer {

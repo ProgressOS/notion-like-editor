@@ -1,0 +1,44 @@
+.badge-wrapper {
+  display: inline;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.badge-wrapper span {
+  transition: all 0.2s ease;
+}
+
+.badge-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge-wrapper input {
+  background: transparent;
+}
+
+.badge-wrapper input:hover {
+  opacity: 0.8;
+}
+
+/* Suggestions dropdown styles */
+.badge-suggestions {
+  font-family: inherit;
+}
+
+.suggestion-item {
+  transition: background-color 0.15s ease;
+}
+
+.suggestion-item:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.suggestion-item.selected {
+  background-color: #e5e7eb !important;
+}
+
+/* Stili per la selezione */
+.ProseMirror .badge-wrapper.ProseMirror-selectednode span {
+  outline-offset: 2px;
+}

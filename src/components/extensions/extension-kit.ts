@@ -37,6 +37,11 @@ import {
 } from ".";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
+import { TagCommand } from "./TagCommand";
+import TagAutocomplete from "./CustomNodes/TagAutocomplete";
+import { Metric } from "./CustomNodes/Metric";
+import { KpiChain } from "./CustomNodes/KpiChain";
+import { Playbook } from "./CustomNodes/Playbook";
 
 const lowlight = createLowlight(common);
 
@@ -103,9 +108,14 @@ export const ExtensionKit = ({
     placeholder: () => "",
   }),
   SlashCommand,
+  TagCommand,
   Focus,
   Figcaption,
   BlockquoteFigure,
+  TagAutocomplete,
+  Metric,
+  KpiChain,
+  Playbook,
   Dropcursor.configure({
     width: 2,
     class: "ProseMirror-dropcursor border-black",

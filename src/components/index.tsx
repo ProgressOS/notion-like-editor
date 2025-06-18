@@ -84,10 +84,10 @@ const Editor: React.FC<EditorProps> = ({
     if (!editor) {
       return undefined;
     }
-
     editor.setEditable(editable);
   }, [editor, editable]);
-  React.useEffect(() => (mode === "light" ? lightMode() : darkMode()), [mode]);
+
+  React.useEffect(() => lightMode(), [mode]);
 
   React.useEffect(() => {
     if (!editor) return;
@@ -102,15 +102,12 @@ const Editor: React.FC<EditorProps> = ({
   }
 
   return (
-    <div
-      className="flex w-full bg-white text-black p-8 h-full"
-      ref={menuContainerRef}
-    >
+    <div className="flex w-full p-8 h-full" ref={menuContainerRef}>
       <div className="relative flex flex-col flex-1 h-full">
         <EditorContent
           editor={editor}
           ref={editorRef}
-          className="flex-1 overflow-y-auto"
+          className="flex-1 overflow-y-auto min-h-screen"
         />
         <LinkMenu editor={editor} appendTo={menuContainerRef} />
         <TextMenu editor={editor} />

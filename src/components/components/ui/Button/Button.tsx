@@ -39,36 +39,36 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           !disabled &&
             !active &&
             "hover:bg-neutral-800 active:bg-neutral-900 dark:hover:bg-neutral-200 dark:active:bg-neutral-300",
-          active && cn("bg-neutral-900 dark:bg-neutral-300", activeClassname)
+          active && cn("bg-neutral-900 dark:bg-black/30", activeClassname)
         ),
 
       variant === "secondary" &&
         cn(
-          "text-neutral-900 dark:text-white",
+          "text-neutral-900 dark:text-black",
           !disabled &&
             !active &&
             "hover:bg-neutral-100 active:bg-neutral-200 dark:hover:bg-neutral-900 dark:active:bg-neutral-800",
-          active && "bg-neutral-200 dark:bg-neutral-800"
+          active && "bg-neutral-200 dark:bg-black/80"
         ),
 
       variant === "tertiary" &&
         cn(
-          "bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-white dark:border-neutral-900",
+          "bg-neutral-50 text-neutral-900 dark:bg-black/90 dark:text-black dark:border-neutral-900",
           !disabled &&
             !active &&
             "hover:bg-neutral-100 active:bg-neutral-200 dark:hover:bg-neutral-800 dark:active:bg-neutral-700",
-          active && cn("bg-neutral-200 dark:bg-neutral-800", activeClassname)
+          active && cn("bg-neutral-200 dark:bg-black/80", activeClassname)
         ),
 
       variant === "ghost" &&
         cn(
-          "bg-transparent border-transparent text-neutral-500 dark:text-neutral-400",
+          "bg-transparent border-transparent text-neutral-500 dark:text-black/40",
           !disabled &&
             !active &&
             "hover:bg-black/5 hover:text-neutral-700 active:bg-black/10 active:text-neutral-800 dark:hover:bg-white/10 dark:hover:text-neutral-300 dark:active:text-neutral-200",
           active &&
             cn(
-              "bg-black/10 text-neutral-800 dark:bg-white/20 dark:text-neutral-200",
+              "bg-black/10 text-neutral-800 dark:bg-white/20 dark:text-black/20",
               activeClassname
             )
         ),
