@@ -1,6 +1,6 @@
 {
   "name": "@progressos/notion-like-editor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Notion-style WYSIWYG editor",
   "authors": [
     "Alexey Buhayov",

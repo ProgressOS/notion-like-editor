@@ -95,18 +95,54 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
 
         // Sostituisci questa URL con la tua API endpoint
         // L'endpoint cambia in base al tagType
+
+        let paramsType = "";
+        switch (node.attrs.tagType) {
+          case TagAutocompleteVariant.Metric:
+            paramsType = "metric";
+            break;
+          case TagAutocompleteVariant.KpiChain:
+            paramsType = "kpi-chain";
+            break;
+          case TagAutocompleteVariant.Playbook:
+            paramsType = "playbook";
+            break;
+          default:
+            console.warn("Unrecognized tagType:", node.attrs.tagType);
+            return;
+        }
+        const endpoint = `/api/autocomplete?q=${encodeURIComponent(query)}&type=${paramsType}&limit=5`;
         /*const response: AxiosResponse<SuggestionItem[]> = await axios.get<
           SuggestionItem[]
-        >(`/api/search?q=${encodeURIComponent(query)}&limit=5`);*/
+        >(endpoint, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });*/
 
         // Assumendo che la response sia un array di oggetti con { id, label }
-        setSuggestions(
-          /*response.data || */ [
-            { id: "1", label: "Nessun risultato trovato" },
-            { id: "2", label: "Prova a cambiare la ricerca" },
-            { id: "3", label: "Controlla la connessione" },
-          ]
-        );
+        setSuggestions(/*response.data || */[
+          {
+            id: "1",
+            label: "Esempio 1",
+          },
+          {
+            id: "2",
+            label: "Esempio 2",
+          },
+          {
+            id: "3",
+            label: "Esempio 3",
+          },
+          {
+            id: "4",
+            label: "Esempio 4",
+          },
+          {
+            id: "5",
+            label: "Esempio 5",
+          }
+        ]);
         setShowSuggestions(true);
         setSelectedIndex(-1);
       } catch (error: unknown) {
