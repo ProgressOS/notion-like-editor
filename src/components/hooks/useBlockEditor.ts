@@ -9,7 +9,6 @@ interface IParams {
   content?: JSONContent | string;
   handleUpdate?: (editor: Editor) => void;
   onUploadImage?: (file: File) => string | Promise<string>;
-  extensions?: Extension[];
 }
 
 export const useBlockEditor = ({
@@ -17,7 +16,6 @@ export const useBlockEditor = ({
   content,
   editable,
   onUploadImage,
-  extensions = [],
 }: IParams) => {
   const editor = useEditor(
     {
@@ -28,7 +26,7 @@ export const useBlockEditor = ({
         console.log("Editor updated:", editor);
         handleUpdate?.(editor);
       },
-      extensions: [...ExtensionKit({ onUpload: onUploadImage, extensions })],
+      extensions: [...ExtensionKit({ onUpload: onUploadImage })],
       editorProps: {
         attributes: {
           autocomplete: "off",

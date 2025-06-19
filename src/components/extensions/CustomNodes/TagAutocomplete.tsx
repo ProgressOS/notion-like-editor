@@ -4,17 +4,20 @@ import { Icon } from "@/components/ui/Icon";
 import axios, { AxiosResponse } from "axios";
 import { icons } from "lucide-react";
 import { Node as ProseMirrorNode } from "@tiptap/pm/model";
+import './autocomplete.css'
 
 export enum TagAutocompleteVariant {
   Metric = "Metric",
   KpiChain = "KpiChain",
   Playbook = "Playbook",
+  Team = "Team",
+  User = "User",
 }
 
 // Types
 interface SuggestionItem {
   id: string | number;
-  label: string;
+  name: string;
 }
 
 interface ApiResponse {
@@ -70,10 +73,64 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isTooltipHovered, setIsTooltipHovered] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const suggestionsRef = useRef<HTMLDivElement | null>(null);
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+  const tooltipTimer = useRef<NodeJS.Timeout | null>(null);
+  const tooltipHideTimer = useRef<NodeJS.Timeout | null>(null);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
+
+  const handleMouseEnterWrapper = (): void => {
+    if (!isEditing && node.attrs.selectedId) {
+      // Cancella il timer di nascondimento se esiste
+      if (tooltipHideTimer.current) {
+        clearTimeout(tooltipHideTimer.current);
+      }
+
+      tooltipTimer.current = setTimeout(() => {
+        setShowTooltip(true);
+      }, 300); // Ridotto a 300ms per essere più responsivo
+    }
+  };
+
+  const handleMouseLeaveWrapper = (): void => {
+    if (tooltipTimer.current) {
+      clearTimeout(tooltipTimer.current);
+    }
+
+    // Non nascondere immediatamente se il tooltip è hovered
+    if (!isTooltipHovered) {
+      tooltipHideTimer.current = setTimeout(() => {
+        setShowTooltip(false);
+      }, 200); // Delay di 200ms prima di nascondere
+    }
+  };
+
+  const handleTooltipMouseEnter = (): void => {
+    setIsTooltipHovered(true);
+    // Cancella il timer di nascondimento
+    if (tooltipHideTimer.current) {
+      clearTimeout(tooltipHideTimer.current);
+    }
+  };
+
+  const handleTooltipMouseLeave = (): void => {
+    setIsTooltipHovered(false);
+    // Nascondi il tooltip dopo un breve delay
+    tooltipHideTimer.current = setTimeout(() => {
+      setShowTooltip(false);
+    }, 200);
+  };
+
+  const handleTooltipClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowTooltip(false);
+    setIsTooltipHovered(false);
+    handleClick(e);
+  };
 
   // Debounced search function
   const debouncedSearch = useCallback(async (query: string): Promise<void> => {
@@ -107,42 +164,49 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
           case TagAutocompleteVariant.Playbook:
             paramsType = "playbook";
             break;
+          case TagAutocompleteVariant.Team:
+            paramsType = "team";
+            break;
+          case TagAutocompleteVariant.User:
+            paramsType = "user";
+            break;
           default:
             console.warn("Unrecognized tagType:", node.attrs.tagType);
             return;
         }
         const endpoint = `/api/autocomplete?q=${encodeURIComponent(query)}&type=${paramsType}&limit=5`;
-        /*const response: AxiosResponse<SuggestionItem[]> = await axios.get<
+
+        // get all cookies from page
+        const cookies = document.cookie
+          .split("; ")
+          .reduce(
+            (
+              acc: Record<string, string>,
+              cookie: string
+            ): Record<string, string> => {
+              const [key, value] = cookie.split("=");
+              acc[key] = decodeURIComponent(value);
+              return acc;
+            },
+            {}
+          );
+
+        const response: AxiosResponse<SuggestionItem[]> = await axios.get<
           SuggestionItem[]
         >(endpoint, {
           headers: {
             "Content-Type": "application/json",
+            // pass cookies
+            Cookie: Object.entries(cookies)
+              .map(([key, value]): string => `${key}=${value}`)
+              .join("; "),
           },
-        });*/
+        });
 
-        // Assumendo che la response sia un array di oggetti con { id, label }
-        setSuggestions(/*response.data || */[
-          {
-            id: "1",
-            label: "Esempio 1",
-          },
-          {
-            id: "2",
-            label: "Esempio 2",
-          },
-          {
-            id: "3",
-            label: "Esempio 3",
-          },
-          {
-            id: "4",
-            label: "Esempio 4",
-          },
-          {
-            id: "5",
-            label: "Esempio 5",
-          }
-        ]);
+        // Assumendo che la response sia un array di oggetti con { id, name }
+        setSuggestions(
+          response.data ||  []
+        );
         setShowSuggestions(true);
         setSelectedIndex(-1);
       } catch (error: unknown) {
@@ -155,11 +219,16 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
     }, 300); // 300ms di debounce
   }, []);
 
-  // Cleanup on unmount
   useEffect((): (() => void) => {
     return (): void => {
       if (debounceTimer.current) {
         clearTimeout(debounceTimer.current);
+      }
+      if (tooltipTimer.current) {
+        clearTimeout(tooltipTimer.current);
+      }
+      if (tooltipHideTimer.current) {
+        clearTimeout(tooltipHideTimer.current);
       }
     };
   }, []);
@@ -222,9 +291,26 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
     }
   };
 
+  const getTooltipLabel = (): string => {
+    switch (node.attrs.tagType) {
+      case "KpiChain":
+        return "Vai alla KPI Chain";
+      case "Playbook":
+        return "Vai al Playbook";
+      case "Metric":
+        return "Vai alla Metrica";
+      case "Team":
+        return "Vai al Team";
+      case "User":
+        return "Vai all'Utente";
+      default:
+        return "Vai al contenuto";
+    }
+  };
+
   const selectSuggestion = (suggestion: SuggestionItem): void => {
     updateAttributes({
-      text: suggestion.label,
+      text: suggestion.name,
       selectedId: suggestion.id, // Salva anche l'ID per uso futuro
     });
     setIsEditing(false);
@@ -324,13 +410,19 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
 
     switch (tagType) {
       case "KpiChain":
-        url = `/dashboard/kpi/${id}`;
+        url = `/dashboard/kpi-chain/${id}`;
         break;
       case "Playbook":
-        url = `/dashboard/project/${id}`;
+        url = `/dashboard/playbooks/${id}`;
         break;
       case "Metric":
-        url = `/dashboard/task/${id}`;
+        url = `/dashboard/kpi-books?kpiId=${id}`;
+        break;
+      case "Team":
+        url = `/dashboard/teams/${id}`;
+        break;
+      case "User":
+        url = `/dashboard/member/${id}`;
         break;
       default:
         console.warn(`Unrecognized tagType: ${tagType}`);
@@ -338,31 +430,6 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
     }
 
     window.open(url, "_blank");
-  };
-
-  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleClickWrapper = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isEditing) return;
-
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current); // Click doppio: cancella il singolo
-      clickTimeoutRef.current = null;
-      return;
-    }
-
-    clickTimeoutRef.current = setTimeout(() => {
-      handleClick(e); // Singolo click dopo timeout → apri URL
-      clickTimeoutRef.current = null;
-    }, 250); // 250ms timeout: tempo standard per distinguere click vs doppio click
-  };
-
-  const handleDoubleClickWrapper = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current); // Impedisce il click singolo
-      clickTimeoutRef.current = null;
-    }
-    handleDoubleClick(); // Entra in editing
   };
 
   return (
@@ -376,8 +443,9 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
         display: "inline-flex",
         gap: "2px",
       }}
-      onClick={handleClickWrapper}
-      onDoubleClick={handleDoubleClickWrapper}
+      onDoubleClick={handleDoubleClick}
+      onMouseEnter={handleMouseEnterWrapper}
+      onMouseLeave={handleMouseLeaveWrapper}
     >
       <Icon name={node.attrs.icon ?? "Link"} className="mr-2" />
       {isEditing ? (
@@ -425,7 +493,7 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
             >
               {isLoading ? (
                 <div style={{ padding: "8px 12px", color: "#6b7280" }}>
-                  Caricamento...
+                  Cercando...
                 </div>
               ) : suggestions.length > 0 ? (
                 suggestions.map((suggestion: SuggestionItem, index: number) => (
@@ -444,7 +512,7 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
                     onClick={(): void => handleSuggestionClick(suggestion)}
                     onMouseEnter={(): void => handleMouseEnter(index)}
                   >
-                    {suggestion.label}
+                    {suggestion.name}
                   </div>
                 ))
               ) : (
@@ -456,13 +524,25 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
           )}
         </div>
       ) : (
-        <span
-          onClick={handleClickWrapper}
-          onDoubleClick={handleDoubleClickWrapper}
-          title="Doppio click per modificare"
-        >
-          {node.attrs.text}
-        </span>
+        <>
+          <span
+            onDoubleClick={handleDoubleClick}
+            title="Doppio click per modificare"
+          >
+            {node.attrs.text}
+          </span>
+          {showTooltip && node.attrs.selectedId && (
+            <div
+              className="badge-tooltip"
+              onClick={handleTooltipClick}
+              onMouseEnter={handleTooltipMouseEnter}
+              onMouseLeave={handleTooltipMouseLeave}
+            >
+              <Icon name="ExternalLink" className="h-4 w-4" />
+              <span>{getTooltipLabel()}</span>
+            </div>
+          )}
+        </>
       )}
     </NodeViewWrapper>
   );

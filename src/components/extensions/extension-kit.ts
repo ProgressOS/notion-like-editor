@@ -42,15 +42,15 @@ import TagAutocomplete from "./CustomNodes/TagAutocomplete";
 import { Metric } from "./CustomNodes/Metric";
 import { KpiChain } from "./CustomNodes/KpiChain";
 import { Playbook } from "./CustomNodes/Playbook";
+import { Team } from "./CustomNodes/Team";
+import { User } from "./CustomNodes/User";
 
 const lowlight = createLowlight(common);
 
 export const ExtensionKit = ({
   onUpload,
-  extensions = [],
 }: {
   onUpload?: (file: File) => string | Promise<string>;
-  extensions?: Extension[];
 }) => [
   Document,
   Columns,
@@ -112,15 +112,15 @@ export const ExtensionKit = ({
   Focus,
   Figcaption,
   BlockquoteFigure,
-  TagAutocomplete,
   Metric,
   KpiChain,
   Playbook,
+  Team,
+  User,
   Dropcursor.configure({
     width: 2,
     class: "ProseMirror-dropcursor border-black",
   }),
-  ...extensions,
 ];
 
 export default ExtensionKit;

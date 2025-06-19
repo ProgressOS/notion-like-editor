@@ -55,10 +55,6 @@ interface EditorProps {
    * A callback function that is called whenever the image upload
    */
   onUploadImage?: (file: File) => string | Promise<string>;
-  /**
-   * An array of extensions to use for the editor.
-   */
-  extensions?: Extension[];
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -67,7 +63,6 @@ const Editor: React.FC<EditorProps> = ({
   mode = "light",
   content,
   onUploadImage,
-  extensions = [],
 }) => {
   const { darkMode, lightMode } = useDarkmode();
   const menuContainerRef = useRef(null);
@@ -77,7 +72,6 @@ const Editor: React.FC<EditorProps> = ({
     handleUpdate: onUpdate,
     onUploadImage,
     content,
-    extensions,
   });
 
   React.useEffect(() => {
