@@ -18,6 +18,8 @@ export enum TagAutocompleteVariant {
 interface SuggestionItem {
   id: string | number;
   name: string;
+  firstName?: string | null | undefined; // For User type, optional
+  lastName?: string | null | undefined; // For User type, optional
 }
 
 interface ApiResponse {
@@ -203,9 +205,28 @@ const TagAutocomplete: React.FC<TagAutocompleteProps> = ({
           },
         });
 
+        let data = response.data;
+
+        // if type is user and data is an array of objects with { id, name }
+        // the name should be composed of firstName and lastName
+        if (node.attrs.tagType === TagAutocompleteVariant.User) {
+          data = data.map(
+            (item: SuggestionItem): SuggestionItem => ({
+              id: item.id,
+              name: `${item.firstName} ${item.lastName}`,
+            })
+          );
+        }
+
+        // setta i name vuoti degli item con un valore di default
+        data = data.map((item: SuggestionItem): SuggestionItem => ({
+          ...item,
+          name: item.name || "Oggetto non definito",
+        }));
+
         // Assumendo che la response sia un array di oggetti con { id, name }
         setSuggestions(
-          response.data ||  []
+          data ||  []
         );
         setShowSuggestions(true);
         setSelectedIndex(-1);
