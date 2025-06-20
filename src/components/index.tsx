@@ -96,7 +96,7 @@ const Editor: React.FC<EditorProps> = ({
   }
 
   return (
-    <div className="flex w-full p-8 h-full" ref={menuContainerRef}>
+    <div className="flex w-full p-0 m-0 h-full" ref={menuContainerRef}>
       <div className="relative flex flex-col flex-1 h-full">
         <EditorContent
           editor={editor}
